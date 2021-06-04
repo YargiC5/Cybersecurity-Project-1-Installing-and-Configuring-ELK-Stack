@@ -71,7 +71,6 @@ Ansible was used to automate configuration of the ELK machine. No configuration 
         update_cache: yes
         name: docker.io
         state: present
-
     - name: Install pip3
       apt:
         force_apt_get: yes
@@ -127,11 +126,39 @@ Web-2: 10.0.0.7
 <br></br>
 Have installed FileBeat and MetricBeat on these machines.
 
+- Playbook for Installing MetricBeat:
+<code>
+---
+- name: Install metric beat
+  hosts: webservers
+  become: true
+  tasks:
+  - name: Download metricbeat
+    command: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.4.0-amd64.deb
+
+  - name: install metricbeat
+    command: dpkg -i metricbeat-7.4.0-amd64.deb
+
+  - name: drop in metricbeat config
+    copy:
+      src: /etc/ansible/files/metricbeat-config.yml
+      dest: /etc/metricbeat/metricbeat.yml
+
+  - name: enable and configure docker module for metric beat
+    command: metricbeat modules enable docker
+
+  - name: setup metric beat
+    command: metricbeat setup
+
+  - name: start metric beat
+    command: service metricbeat start
+</code>
+
 These Beats allow us to collect the following information from each machine:
 
-Filebeat detects changes to the filesystem and collects Apache logs.
-Metricbeat detecs changes in system metrics, such as CPU usage. It can be used to detect sudo escalations, and CPU or RAM statistics.
-Packetbeat collects packets that pass through the network interface card, similar to of Wireshark. It can be utilized to capture and generate a trace of all activity that takes place within the network.
+- Filebeat detects changes to the filesystem and collects Apache logs.
+- Metricbeat detecs changes in system metrics, such as CPU usage. It can be used to detect sudo escalations, and CPU or RAM statistics.
+- Packetbeat collects packets that pass through the network interface card, similar to of Wireshark. It can be utilized to capture and generate a trace of all activity that takes place within the network.
 
 <h1>Using the Playbook</h1>
 
