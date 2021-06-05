@@ -59,7 +59,7 @@ A summary of the access policies in place can be found in the table below.
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because automation provided efficiency, and less chance of a mess up.
 
 - Playbook for ELK Installation and Configuration:
-<code>
+'''
 ---
 - name: Configure Elk VM with Docker
   hosts: elkservers
@@ -102,7 +102,7 @@ Ansible was used to automate configuration of the ELK machine. No configuration 
           - 5601:5601
           - 9200:9200
           - 5044:5044
-</code>
+'''
 
 The playbook implements the following tasks:
 <ul>
@@ -127,7 +127,7 @@ Web-2: 10.0.0.7
 Have installed FileBeat and MetricBeat on these machines.
 
 - Playbook for Installing MetricBeat:
-<code>
+'''
 ---
 - name: Install metric beat
   hosts: webservers
@@ -152,7 +152,7 @@ Have installed FileBeat and MetricBeat on these machines.
 
   - name: start metric beat
     command: service metricbeat start
-</code>
+'''
 
 These Beats allow us to collect the following information from each machine:
 
