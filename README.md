@@ -62,7 +62,7 @@ The ELK VM exposes an Elastic Stack instance. Docker is used to download and man
 
 To use this playbook, one must log into the Jump Box, then issue: `ansible-playbook install_elk.yml` elk. This runs the `install_elk.yml` playbook on the `elk` host.
 
-- Playbook for Docker Installation on Web Servers:
+Playbook for Docker Installation on Web Servers:
 
 ```
 ---
@@ -108,7 +108,7 @@ The playbook implements the following tasks:
   <li>Downloading Images </li>
 </ul>
 
-- Playbook for ELK Installation and Configuration:
+Playbook for ELK Installation and Configuration:
 
 ```
 ---
@@ -245,7 +245,7 @@ These Beats allow us to collect the following information from each machine:
 
 - Filebeat detects changes to the filesystem and collects Apache logs.
 - Metricbeat detecs changes in system metrics, such as CPU usage. It can be used to detect sudo escalations, and CPU or RAM statistics.
-- Packetbeat collects packets that pass through the network interface card, similar to of Wireshark. It can be utilized to capture and generate a trace of all activity that takes place within the network.
+- Packetbeat(Not Installed) collects packets that pass through the network interface card, similar to of Wireshark. It can be utilized to capture and generate a trace of all activity that takes place within the network.
 
 <h1>Using the Playbook</h1>
 
