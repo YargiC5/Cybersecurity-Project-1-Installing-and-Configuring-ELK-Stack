@@ -58,6 +58,52 @@ A summary of the access policies in place can be found in the table below.
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because automation provided efficiency, and less chance of a mess up.
 
+- Playbook for Docker Installation on Web Servers:
+
+```
+---
+ - name: My first playbook
+   hosts: webservers
+   become: true
+   tasks:
+   - name: Install docker
+     apt:
+       force_apt_get: yes
+       update_cache: yes
+       name: docker.io
+       state: present
+   - name: Install python3-pip
+     apt:
+       force_apt_get: yes
+       name: python3-pip
+       state: present
+   - name: Install docker python package
+     pip:
+       name: docker
+       state: present
+   - name: Run cyberxsecurity/dvwa
+     docker_container:
+       name: dvwa
+       image: cyberxsecurity/dvwa
+       state: started
+       restart: yes
+       restart_policy: always
+       ports:
+        - "80:80"
+       state: present
+   - name: systemd start docker service
+     systemd:
+       name: docker
+       daemon_reload: yes
+       enabled: yes
+```
+The playbook implements the following tasks:
+<ul>
+  <li>Installing Docker</li>
+  <li>Configuring Containers</li>
+  <li>Downloading Images </li>
+</ul>
+
 - Playbook for ELK Installation and Configuration:
 
 ```
@@ -127,6 +173,41 @@ Web-2: 10.0.0.7
 <br></br>
 Have installed FileBeat and MetricBeat on these machines.
 
+- Playbook for Installing FileBeat:
+
+```
+---
+ - name: Install + Launch Filebeat
+   hosts: webservers
+   become: yes
+   tasks:
+
+   - name: Download filebeat deb
+     command: curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.6.1-amd64.deb
+
+   - name: Install filebeat deb
+     command: dpkg -i filebeat-7.6.1-amd64.deb
+
+   - name: drop in filebeat.yml
+     copy:
+       src: /etc/ansible/files/filebeat-config.yml
+       dest: /etc/filebeat/filebeat.yml
+
+   - name: enable and configure system module
+     command: filebeat modules enable system
+
+   - name: setup filebeat
+     command: filebeat setup
+
+   - name: start filebeat service
+     command: service filebeat start
+
+   - name: enable service filebeat on boot
+     systemd:
+       name: filebeat
+       enabled: yes
+```
+
 - Playbook for Installing MetricBeat:
 
 ```
@@ -136,10 +217,10 @@ Have installed FileBeat and MetricBeat on these machines.
   become: true
   tasks:
   - name: Download metricbeat
-    command: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.4.0-amd64.deb
+    command: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb
 
   - name: install metricbeat
-    command: dpkg -i metricbeat-7.4.0-amd64.deb
+    command: dpkg -i metricbeat-7.6.1-amd64.deb
 
   - name: drop in metricbeat config
     copy:
