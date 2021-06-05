@@ -60,7 +60,8 @@ Ansible was used to automate configuration of the ELK machine. No configuration 
 
 - Playbook for ELK Installation and Configuration:
 
-'''
+```
+---
 - name: Configure Elk VM with Docker
   hosts: elkservers
   remote_user: elk
@@ -102,7 +103,7 @@ Ansible was used to automate configuration of the ELK machine. No configuration 
           - 5601:5601
           - 9200:9200
           - 5044:5044
-'''
+```
 
 The playbook implements the following tasks:
 <ul>
@@ -128,7 +129,8 @@ Have installed FileBeat and MetricBeat on these machines.
 
 - Playbook for Installing MetricBeat:
 
-'''
+```
+---
 - name: Install metric beat
   hosts: webservers
   become: true
@@ -152,7 +154,7 @@ Have installed FileBeat and MetricBeat on these machines.
 
   - name: start metric beat
     command: service metricbeat start
-'''
+```
 
 These Beats allow us to collect the following information from each machine:
 
