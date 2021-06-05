@@ -58,6 +58,10 @@ A summary of the access policies in place can be found in the table below.
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because automation provided efficiency, and less chance of a mess up.
 
+The ELK VM exposes an Elastic Stack instance. Docker is used to download and manage an ELK container.
+
+To use this playbook, one must log into the Jump Box, then issue: `ansible-playbook install_elk.yml` elk. This runs the `install_elk.yml` playbook on the `elk` host.
+
 - Playbook for Docker Installation on Web Servers:
 
 ```
