@@ -62,7 +62,7 @@ The ELK VM exposes an Elastic Stack instance. Docker is used to download and man
 
 To use this playbook, one must log into the Jump Box, then issue: `ansible-playbook install_elk.yml` elk. This runs the `install_elk.yml` playbook on the `elk` host.
 
-Playbook for Docker Installation on Web Servers:
+<h3>Playbook for Docker/DVWA Installation on Web Servers:</h3>
 
 ```
 ---
@@ -101,14 +101,14 @@ Playbook for Docker Installation on Web Servers:
        daemon_reload: yes
        enabled: yes
 ```
-The playbook implements the following tasks:
+This playbook implements the following tasks:
 <ul>
   <li>Installing Docker</li>
   <li>Configuring Containers</li>
   <li>Downloading Images </li>
 </ul>
 
-Playbook for ELK Installation and Configuration:
+<h3>Playbook for ELK Installation and Configuration:</h3>
 
 ```
 ---
@@ -155,7 +155,7 @@ Playbook for ELK Installation and Configuration:
           - 5044:5044
 ```
 
-The playbook implements the following tasks:
+This playbook implements the following tasks:
 <ul>
   <li>Installing Docker</li>
   <li>Configuring Containers</li>
@@ -245,7 +245,7 @@ These Beats allow us to collect the following information from each machine:
 
 - Filebeat detects changes to the filesystem and collects Apache logs.
 - Metricbeat detecs changes in system metrics, such as CPU usage. It can be used to detect sudo escalations, and CPU or RAM statistics.
-- Packetbeat(Not Installed) collects packets that pass through the network interface card, similar to of Wireshark. It can be utilized to capture and generate a trace of all activity that takes place within the network.
+- Packetbeat (Not Installed) collects packets that pass through the network interface card, similar to of Wireshark. It can be utilized to capture and generate a trace of all activity that takes place within the network.
 
 <h1>Using the Playbook</h1>
 
@@ -253,7 +253,7 @@ In order to use the playbook, you will need to have an Ansible control node alre
 
 SSH into the control node and follow the steps below:
 - Copy the playbooks to the Ansible Control Node.
-- Run the playbook, and navigate to /etc/ansible/files to check that the installation worked as expected.
+- Run the playbook with the command `ansible-playbook [playbook-name].yml elk` and navigate to /etc/ansible/files to check that the installation worked as expected.
 - Use the curl command to add the config file:
 <code> curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml </code>
 
